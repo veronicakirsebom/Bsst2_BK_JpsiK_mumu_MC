@@ -62,7 +62,7 @@ void massBsst2_distr_TRUE_vs_VIS()
     
 
 //------------------------------------------------------------------------------------------------
-// SET BRANCH ADDRESS
+// SET BRANCH ADDRESSES
     
     
     // Bsst2_TRUEID
