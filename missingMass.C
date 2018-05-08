@@ -268,8 +268,8 @@ void missingMass()
             Double_t dot_BK = pK1.Dot(dB);
         
             // length of vectors
-            Double_t len_dB = sqrt(pow(dB.X(),2) + pow(dB.Y(),2) + pow(dB.Z(),2)) ;
-            Double_t len_pK1 = sqrt(pow(pK1.X(),2) + pow(pK1.Y(),2) + pow(pK1.Z(),2)) ;
+            Double_t len_dB = sqrt(dB.X()*dB.X() + dB.Y()*dB.Y() + dB.Z()*dB.Z()) ;
+            Double_t len_pK1 = sqrt(pK1.X()*pK1.X() + pK1.Y()*pK1.Y() + pK1.Z()*pK1.Z()) ;
         
             // cosine of angle between B and K
             Double_t cos_BKangle = dot_BK / (len_dB * len_pK1);
@@ -285,9 +285,9 @@ void missingMass()
             pvis.RotateUz(dB_unit); //
         
             // Two solutions to B+ energy using m(BK) == m(Bsst2)
-            Double_t a = pow(EK1,2)-pow(len_pK1,2)*pow(cos_BKangle,2);
+            Double_t a = EK1*EK1 - len_pK1*len_pK1 * cos_BKangle*cos_BKangle;
             Double_t b = -EK1*delta2;
-            Double_t c = pow(MB,2)*pow(len_pK1,2)*pow(cos_BKangle,2) + 1.0/4.0*pow(delta2,2);
+            Double_t c = MB*MB * len_pK1*len_pK1 * cos_BKangle*cos_BKangle + 1.0/4.0 * delta2*delta2;
             Double_t d = b*b-4*a*c ;
         
             Double_t EB_plus = (-b+sqrt(d))/(2*a);
@@ -309,8 +309,8 @@ void missingMass()
             
                 N_EBplus++;
                 
-                TLorentzVector pB_plus(0,0,sqrt(pow(EB_plus,2)-pow(MB,2)),EB_plus);
-                Double_t MM2_plus = pow(pB_plus.E()-pvis.E(),2) - pow(pB_plus.Px()-pvis.Px(),2) - pow(pB_plus.Py()-pvis.Py(),2) - pow(pB_plus.Pz()-pvis.Pz(),2);
+                TLorentzVector pB_plus(0,0,sqrt(EB_plus*EB_plus-MB*MB),EB_plus);
+                Double_t MM2_plus = (pB_plus.E()-pvis.E())*(pB_plus.E()-pvis.E()) - (pB_plus.Px()-pvis.Px())*(pB_plus.Px()-pvis.Px()) - (pB_plus.Py()-pvis.Py())*(pB_plus.Py()-pvis.Py()) - (pB_plus.Pz()-pvis.Pz())*(pB_plus.Pz()-pvis.Pz());
             
                 //Double_t MM2_plus = (pB_plus-pvis)*(pB_plus-pvis);
                 cout << "EB_plus = " << EB_minus << endl;
@@ -323,8 +323,8 @@ void missingMass()
                 
                 N_EBminus++;
             
-                TLorentzVector pB_minus(0,0,sqrt(pow(EB_minus,2)-pow(MB,2)),EB_minus);
-                Double_t MM2_minus = pow(pB_minus.E()-pvis.E(),2) - pow(pB_minus.Px()-pvis.Px(),2) - pow(pB_minus.Py()-pvis.Py(),2) - pow(pB_minus.Pz()-pvis.Pz(),2);
+                TLorentzVector pB_minus(0,0,sqrt(EB_minus*EB_minus-MB*MB),EB_plus);
+                Double_t MM2_minus = (pB_minus.E()-pvis.E())*(pB_minus.E()-pvis.E()) - (pB_minus.Px()-pvis.Px())*(pB_minus.Px()-pvis.Px()) - (pB_minus.Py()-pvis.Py())*(pB_minus.Py()-pvis.Py()) - (pB_minus.Pz()-pvis.Pz())*(pB_minus.Pz()-pvis.Pz());
             
                 //Double_t MM2_minus = (pB_minus-pvis)*(pB_minus-pvis);
                 cout << "EB_minus = " << EB_minus << endl;
